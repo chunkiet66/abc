@@ -1,7 +1,7 @@
 #include<io.h>
 #include<stdio.h>
 #include<winsock2.h>
-#include <time.h>
+
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 int main(int argc , char *argv[])
 {
@@ -9,7 +9,7 @@ int main(int argc , char *argv[])
 	WSADATA wsa ;
 	SOCKET s , new_socket;
 	struct sockaddr_in server , client;
-	int c, cnt;
+	int c;
 	char msg [100];
 	int recv_size;
 	char client_reply[2000];
@@ -84,11 +84,3 @@ int main(int argc , char *argv[])
 	return 0;
 }
 
-// Timer fucntioN: 
-void timer (int sec)
-{
-	clock_t end;
-
-	end = clock () + sec * CLOCKS_PER_SEC;
-	while (clock () <= end);
-}

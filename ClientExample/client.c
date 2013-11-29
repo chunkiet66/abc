@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <conio.h>
 #include <winsock2.h>
-#include <time.h>
+
 #pragma comment (lib, "ws2_32.lib")
 
-void timer (int sec);
+
 int main (int argc, char *argv [])
 {
 	WSADATA wsa;
 	SOCKET sck,retSocket;
-	int cnt,c;
+	int c;
 	struct sockaddr_in ip_info,server;
 	char server_reply[2000];
 	int recv_size;
@@ -71,11 +71,3 @@ int main (int argc, char *argv [])
 }
 
 
-// Timer fucntioN: 
-void timer (int sec)
-{
-	clock_t end;
-
-	end = clock () + sec * CLOCKS_PER_SEC;
-	while (clock () <= end);
-}
