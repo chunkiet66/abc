@@ -1,6 +1,7 @@
 #include<io.h>
 #include<stdio.h>
 #include<winsock2.h>
+#include <time.h>
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 int main(int argc , char *argv[])
 {
@@ -59,13 +60,35 @@ int main(int argc , char *argv[])
 		send(s , msg , strlen(msg) , 0);
 	}*/
 
-	while (recv_size = recv(new_socket, client_reply, 2000, 0)) {
+	while (1) {
+		printf("\n");
+		recv_size = recv(new_socket, client_reply, 2000, 0);
 		if (recv_size == SOCKET_ERROR) {
 			puts("recv failed");
 		} else { 
 			client_reply[recv_size] = '\0';
+			printf("Receive: ");
 			puts(client_reply);
 		}
+		printf("Successfully received message\n");
+
+		if(send(new_socket , client_reply , strlen(client_reply) , 0) == SOCKET_ERROR)
+			puts("fail to reply the client.\n");
+		else
+			printf("Message Successfully sent back to Client\n");
+
+
 	}
+	closesocket(s);
+	closesocket(new_socket);
 	return 0;
+}
+
+// Timer fucntioN: 
+void timer (int sec)
+{
+	clock_t end;
+
+	end = clock () + sec * CLOCKS_PER_SEC;
+	while (clock () <= end);
 }

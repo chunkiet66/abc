@@ -4,7 +4,7 @@
 #include <time.h>
 #pragma comment (lib, "ws2_32.lib")
 
-
+void timer (int sec);
 int main (int argc, char *argv [])
 {
 	WSADATA wsa;
@@ -34,10 +34,24 @@ int main (int argc, char *argv [])
 
 	//retSocket = accept(sck , (struct sockaddr *)&server, &c);
 	while(1){
+		printf("\n");
 		printf ("Send: ");
 		gets(msg);
 
-		send(sck , msg , strlen(msg) , 0);
+		if(send(sck , msg , strlen(msg) , 0) == SOCKET_ERROR)
+			puts("fail");
+		else
+			printf("Message Successfully sent to Server\n");
+		
+		recv_size = recv(sck, server_reply, 2000, 0);
+		server_reply[recv_size] = '\0';
+		if ( recv_size== SOCKET_ERROR) {
+			puts("recv failed");
+		} else { 
+			
+			printf("Received from server: ");
+			puts(server_reply);
+		}
 	}
 	/*while (recv_size = recv(sck, server_reply, 2000, 0)) {
 		if (recv_size == SOCKET_ERROR) {
@@ -52,7 +66,16 @@ int main (int argc, char *argv [])
 
 
 	getch ();
+	closesocket(sck);
     return 0;
 }
 
 
+// Timer fucntioN: 
+void timer (int sec)
+{
+	clock_t end;
+
+	end = clock () + sec * CLOCKS_PER_SEC;
+	while (clock () <= end);
+}
